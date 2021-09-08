@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.CustomerMapper">
+    <select id="selectCustomerIdByUnionid" resultType="java.lang.Integer">
+        select customer_id from customer where customer_unionid=#{unionid}
+    </select>
+
+    <insert id="insertCustomer">
+        insert into customer(customer_unionid,student_name,parent_name,school,grade,phone)
+        values(#{customerUnionid},#{studentName},#{parentName},#{school},#{grade},#{phone})
+    </insert>
+
+    <select id="selectCustomerByCustomerId" resultType="com.frj.flyeducation.domain.entity.customer.Customer">
+        select customer_id,customer_unionid,student_name,parent_name,school,grade,phone
+        from customer where customer_id=#{customerId}
+    </select>
+
+    <select id="selectCustomersByKeyword" resultType="com.frj.flyeducation.domain.entity.customer.Customer">
+        select customer_id,student_name from customer where student_name like CONCAT('%',#{keyword},'%')
+    </select>
+</mapper>

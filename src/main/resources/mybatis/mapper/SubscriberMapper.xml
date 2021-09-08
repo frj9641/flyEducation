@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.SubscriberMapper">
+    <insert id="insertAppUser">
+        insert into subscriber(subscriber_app_openid,subscriber_unionid)
+        values (#{subscriberAppOpenid},#{subscriberUnionid})
+    </insert>
+    
+    <update id="updateAppOpenidByUnionid">
+        update subscriber set subscriber_app_openid=#{subscriberAppOpenid}
+        where subscriber_unionid=#{subscriberUnionid}
+    </update>
+
+    <select id="selectOfficalOpenidByUnionid" resultType="java.lang.String">
+        select subscriber_official_openid from subscriber where subscriber_unionid=#{subscriberUnionid}
+    </select>
+
+    <select id="selectAppOpenidByUnionid" resultType="java.lang.String">
+        select subscriber_app_openid from subscriber where subscriber_unionid=#{subscriberUnionid}
+    </select>
+
+    <insert id="insertOfficialUser">
+        insert into subscriber(subscriber_official_openid,subscriber_unionid,subscriber_nickname)
+        values (#{subscriberOfficialOpenid},#{subscriberUnionid},#{subscriberNickname})
+    </insert>
+
+    <update id="updateOfficialOpenidByUnionid">
+        update subscriber set subscriber_official_openid=#{subscriberOfficialOpenid},subscriber_nickname=#{subscriberNickname}
+        where subscriber_unionid=#{subscriberUnionid}
+    </update>
+</mapper>

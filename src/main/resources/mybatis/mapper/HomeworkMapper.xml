@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.HomeworkMapper">
+    <insert id="insertHomework">
+        insert into homework(class_id,word,photo_url,date) values(#{classId},#{word},#{photoUrl},curdate())
+    </insert>
+
+    <select id="selectHomeworkByClassId" resultType="com.frj.flyeducation.domain.entity.homework.Homework">
+        select homework_id,photo_url,date from homework where class_id=#{classId}
+    </select>
+    
+    <select id="selectHomeworkByHomeworkId" resultType="com.frj.flyeducation.domain.entity.homework.Homework">
+        select homework_id,class_id,word,photo_url,date from homework where homework_id=#{homeworkId}
+    </select>
+
+    <delete id="deleteHomeworksByClassId">
+        delete from homework where class_id=#{classId}
+    </delete>
+
+    <select id="selectHomeworkIdByDate" resultType="java.lang.Integer">
+        select homework_id from homework where class_id=#{classId} and date=curdate()
+    </select>
+
+    <delete id="deleteHomeworkByHomeworkId">
+        delete from homework where homework_id=#{homeworkId}
+    </delete>
+</mapper>

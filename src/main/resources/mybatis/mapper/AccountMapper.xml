@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.AccountMapper">
+    <insert id="insertAccount">
+        insert into account(order_id,is_period,period,price)
+        values(#{orderId},#{isPeriod},#{period},#{price})
+    </insert>
+
+    <select id="selectIsPeriodByOrderId" resultType="java.lang.Integer">
+        select is_period from account where order_id=#{orderId}
+    </select>
+
+    <update id="updatePeriodByOrderId">
+        update account set period=period-1 where order_id=#{orderId}
+    </update>
+
+    <select id="selectPeriodByOrderId" resultType="java.lang.Integer">
+        select period from account where order_id=#{orderId}
+    </select>
+</mapper>

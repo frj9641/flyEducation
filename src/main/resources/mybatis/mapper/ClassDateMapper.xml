@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.ClassDateMapper">
+    <insert id="insertClassDate">
+        insert into class_date(class_id,date,time) values(#{classId},#{date},#{time})
+    </insert>
+
+    <select id="selectClassDateByClassId" resultType="com.frj.flyeducation.domain.entity.classdate.ClassDate">
+        select class_date_id,date from class_date where class_id=#{classId}
+    </select>
+
+<!--    根据主键修改-->
+    <update id="updateDateByClassId">
+        update class_date set date=#{newDay},
+        time=concat(#{startHour},':',#{startMinute},'~',#{endHour},':',#{endMinute})
+        where class_id=#{classId} and date=#{oldDay}
+    </update>
+
+    <delete id="deleteClassDatesByClassId">
+        delete from class_date where class_id=#{classId}
+    </delete>
+
+    <select id="selectClassDatesByDate" resultType="com.frj.flyeducation.domain.entity.classdate.ClassDate">
+        SELECT class_id,time FROM class_date WHERE DATE_SUB(date,INTERVAL 1 DAY)=curdate()
+    </select>
+
+    <select id="selectClassDateIdByClassId" resultType="java.lang.Integer">
+        select class_date_id from class_date where class_id=#{classId} and date=curdate()
+    </select>
+
+    <select id="selectTimeByDate" resultType="java.lang.String">
+        select time from class_date where class_id=#{classId} and date=#{oldDay}
+    </select>
+</mapper>

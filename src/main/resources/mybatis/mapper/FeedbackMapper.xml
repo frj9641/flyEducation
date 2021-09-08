@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.FeedbackMapper">
+    <insert id="insertFeedback">
+        insert into feedback(class_id,student_id,mark,word,date)
+        values(#{classId},#{studentId},#{mark},#{word},curdate())
+    </insert>
+
+    <select id="selectFeedbackByClassId" resultType="com.frj.flyeducation.domain.entity.feedback.Feedback">
+        select feedback_id,student_id,mark,word,date from feedback where class_id=#{classId}
+    </select>
+</mapper>

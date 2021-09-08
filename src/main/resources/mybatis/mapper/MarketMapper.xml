@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.MarketMapper">
+    <insert id="insertMarket">
+        insert into market(market_name,subject,introduction,poster_url,teacher_name,registrar_unionid,registrar_name,is_period,period,price,date)
+        values(#{marketName},#{subject},#{introduction},#{posterUrl},#{teacherName},#{registrarUnionid},#{registrarName},#{isPeriod},#{period},#{price},curdate())
+    </insert>
+
+    <select id="selectMarketsByIsReleased" resultType="com.frj.flyeducation.domain.entity.market.Market">
+        select market_id,market_name,subject,introduction,poster_url,teacher_name,is_period,period,price from market where is_released=1
+    </select>
+
+    <select id="selectMarketByMarketId" resultType="com.frj.flyeducation.domain.entity.market.Market">
+        select market_name,teacher_name,registrar_unionid,is_period,period,price from market where market_id=#{marketId}
+    </select>
+
+    <select id="selectMarketsByRegistrarUnionid" resultType="com.frj.flyeducation.domain.entity.market.MarketResultBean">
+        select market_id,market_name,registrar_unionid from market where registrar_unionid=#{registrarUnionid}
+    </select>
+    
+    <select id="selectMarkets" resultType="com.frj.flyeducation.domain.entity.market.Market">
+        select market_id,market_name,subject,introduction,poster_url,teacher_name,registrar_name,price,is_released,is_period,period,date
+        from market
+    </select>
+
+    <update id="updateIsReleasedByMarketId1">
+        update market set is_released=1 where market_id=#{marketId}
+    </update>
+
+    <update id="updateIsReleasedByMarketId0">
+        update market set is_released=0 where market_id=#{marketId}
+    </update>
+
+    <select id="selectIsReleasedByMarketId" resultType="java.lang.Integer">
+        select is_released from market where market_id=#{marketId}
+    </select>
+
+    <delete id="deleteMarketByMarketId">
+        delete from market where market_id=#{marketId}
+    </delete>
+</mapper>

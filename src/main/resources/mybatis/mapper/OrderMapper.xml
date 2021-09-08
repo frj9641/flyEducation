@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.OrderMapper">
+    <insert useGeneratedKeys="true" keyProperty="orderId" id="insertOrder">
+        insert into tbl_order(customer_unionid,student_name,parent_name,school,grade,phone,
+        market_id,registrar_unionid,is_added,is_finished,is_intent,is_success)
+        values (#{customerUnionid},#{studentName},#{parentName},#{school},#{grade},#{phone},
+        #{marketId},#{registrarUnionid},#{isAdded},#{isFinished},#{isIntent},#{isSuccess})
+    </insert>
+
+    <select id="selectIsAddedByUnionids" resultType="java.lang.Integer">
+        select distinct is_added from tbl_order where registrar_unionid=#{registrarUnionid} and customer_unionid=#{customerUnionid}
+    </select>
+
+    <select id="selectOrdersByRegistrarUnionid" resultType="com.frj.flyeducation.domain.entity.order.Order">
+        select order_id,student_name,phone,market_id,is_added,is_finished,is_intent,is_success
+        from tbl_order where registrar_unionid=#{registrarUnionid} and is_finished=0
+    </select>
+
+    <update id="updateIsAddedByOrderId">
+        update tbl_order set is_added=1 where order_id=#{orderId}
+    </update>
+
+    <update id="updateIsFinishedByOrderId">
+        update tbl_order set is_finished=1 where order_id=#{orderId}
+    </update>
+
+    <update id="updateIsIntentByOrderId1">
+        update tbl_order set is_intent=1 where order_id=#{orderId}
+    </update>
+
+    <update id="updateIsIntentByOrderId0">
+        update tbl_order set is_intent=0 where order_id=#{orderId}
+    </update>
+
+    <select id="selectIntentOrdersByRegistrarUnionid" resultType="com.frj.flyeducation.domain.entity.order.Order">
+        select order_id,customer_unionid,student_name,parent_name,school,grade,phone,
+        market_id,is_added,is_finished,is_intent,is_success,date
+        from tbl_order where registrar_unionid=#{registrarUnionid} and is_intent=1 and is_success=0
+    </select>
+
+    <update id="updateDateByOrderId">
+        update tbl_order set date=#{date} where order_id=#{orderId}
+    </update>
+
+    <update id="updateIsSuccessByOrderId">
+        update tbl_order set is_success=1 where order_id=#{orderId}
+    </update>
+
+    <select id="selectOrderByOrderId" resultType="com.frj.flyeducation.domain.entity.order.Order">
+        select order_id,customer_unionid,student_name,parent_name,school,grade,phone,
+        market_id,registrar_unionid from tbl_order where order_id=#{orderId}
+    </select>
+
+    <select id="selectOrderIdByStudentId" resultType="java.lang.Integer">
+        select order_id from student where student_id=#{studentId}
+    </select>
+
+    <select id="selectOrderIdByCustomerUnionid" resultType="java.lang.Integer">
+        select order_id from tbl_order where customer_unionid=#{customerUnionid} and market_id=#{marketId} and is_finished=0
+    </select>
+</mapper>

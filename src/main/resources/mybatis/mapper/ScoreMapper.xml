@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.ScoreMapper">
+    <insert id="insertScore">
+        insert into score(homework_id,class_id,student_id,word,photo_url)
+        values (#{homeworkId},#{classId},#{studentId},#{word},#{photoUrl})
+    </insert>
+
+    <select id="selectScoresByHomeworkId" resultType="com.frj.flyeducation.domain.entity.score.Score">
+        select score_id,student_id,mark from score where homework_id=#{homeworkId}
+    </select>
+
+    <select id="selectScoreByScoreId" resultType="com.frj.flyeducation.domain.entity.score.Score">
+        select score_id,word,photo_url,mark from score where score_id=#{scoreId}
+    </select>
+
+    <update id="updateMarkByScoreId">
+        update score set mark=#{mark} where score_id=#{scoreId}
+    </update>
+
+    <delete id="deleteScoresByClassId">
+        delete from score where class_id=#{classId}
+    </delete>
+
+    <select id="selectScoreByHomeworkMarkQueryBean" resultType="com.frj.flyeducation.domain.entity.score.ScoreResultBean">
+        select score_id,mark,photo_url from score where student_id=#{studentId} and homework_id=#{homeworkId}
+    </select>
+
+    <select id="selectScoreIdByScore" resultType="java.lang.Integer">
+        select score_id from score where homework_id=#{homeworkId} and student_id=#{studentId}
+    </select>
+
+    <delete id="deleteScoresByHomeworkId">
+        delete from score where homework_id=#{homeworkId}
+    </delete>
+</mapper>

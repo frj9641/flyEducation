@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.StudentMapper">
+    <insert id="insertStudent">
+        insert into student (customer_unionid,student_name,parent_name,school,grade,phone,
+        order_id,market_name,teacher_name,registrar_unionid,class_id,class_name)
+        values (#{customerUnionid},#{studentName},#{parentName},#{school},#{grade},#{phone},
+        #{orderId},#{marketName},#{teacherName},#{registrarUnionid},#{classId},#{className})
+    </insert>
+
+    <select id="selectStudentsByClassId" resultType="com.frj.flyeducation.domain.entity.student.Student">
+        select student_id,customer_unionid,student_name,class_id,class_name from student where class_id=#{classId}
+    </select>
+
+    <update id="updateClassIdAndClassNameByStudentId">
+        update student set class_id=#{classId},class_name=#{className} where student_id=#{studentId}
+    </update>
+
+    <select id="selectStudentsByRegistrarUnionid" resultType="com.frj.flyeducation.domain.entity.student.Student">
+        select student_id,student_name,grade,market_name,teacher_name from student
+        where registrar_unionid=#{registrarUnionid} and class_id is null
+    </select>
+
+    <delete id="deleteStudentsByClassId">
+        delete from student where class_id=#{classId}
+    </delete>
+
+    <select id="selectClassesByCustomerUnionid" resultType="com.frj.flyeducation.domain.entity.student.StudentClassResultBean">
+        select student_id,class_id,class_name,student_name from student where customer_unionid=#{customerUnionid} and class_id is not null
+    </select>
+
+    <select id="selectStudentNameByStudentId" resultType="java.lang.String">
+        select student_name from student where student_id=#{studentId}
+    </select>
+
+    <select id="selectStudentByStudentId" resultType="com.frj.flyeducation.domain.entity.student.Student">
+        select customer_unionid,student_name,class_name from student where student_id=#{studentId}
+    </select>
+
+    <select id="selectOrderIdByStudentId" resultType="java.lang.Integer">
+        select order_id from student where student_id=#{studentId}
+    </select>
+</mapper>

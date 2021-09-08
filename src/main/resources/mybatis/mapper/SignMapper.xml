@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.SignMapper">
+    <select id="selectMarkByStudentId" resultType="java.lang.Integer">
+        select mark from sign where student_id=#{studentId} and date=curdate()
+    </select>
+
+    <insert id="insertSign">
+        insert into sign(class_id,student_id,date,mark)
+        values(#{classId},#{studentId},#{date},#{mark})
+    </insert>
+
+    <select id="selectSignsByStudentId" resultType="com.frj.flyeducation.domain.entity.sign.Sign">
+        select sign_id,date,mark from sign where student_id=#{studentId}
+    </select>
+
+    <delete id="deleteSignsByclassId">
+        delete from sign where class_id=#{classId}
+    </delete>
+</mapper>

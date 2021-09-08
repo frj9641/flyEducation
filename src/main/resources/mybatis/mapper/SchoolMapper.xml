@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frj.flyeducation.domain.mapper.SchoolMapper">
+    <insert id="insertSchool">
+        insert into school(class_id,student_id,mark,date)
+        value (#{classId},#{studentId},#{mark},curdate())
+    </insert>
+
+    <select id="selectSchoolsByStudentId" resultType="com.frj.flyeducation.domain.entity.school.School">
+        select school_id,mark,date from school where student_id=#{studentId}
+    </select>
+</mapper>
